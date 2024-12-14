@@ -7,7 +7,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { loger } from './middlewares/loger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
-import productsRouter from './routers/Prodicts.js';
+import productsRouter from './routers/Products.js';
 
 export const startServer = () => {
   const app = express();

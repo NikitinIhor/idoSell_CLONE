@@ -33,6 +33,6 @@ export const getProductsFromIdosell = async () => {
     await ProductsCollection.insertMany(mongoDbOrders);
     console.log('Orders successfully saved to MongoDB.');
   } catch (error) {
-    throw error;
+    console.log(error.message);
   }
 };
