@@ -5,20 +5,27 @@ import { env } from './env.js';
 
 export const getProductsFromIdosell = async () => {
   try {
-    axios.defaults.baseURL = 'https://www.idosell.com';
-    const API_KEY = env('IDOSEL_API_KEY');
-
+    const API_KEY = env('IDOSELL_API_KEY');
     if (!API_KEY) {
       throw createHttpError(404, 'Missing API key');
     }
 
-    const res = await axios.get('/orders', {
+    const options = {
+      method: 'POST',
+      url: 'https://zooart6.yourtechnicaldomain.com/api/admin/v4/orders/orders/get',
       headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        'Content-Type': 'application/json',
+        'content-type': 'application/json',
+        'X-API-KEY': API_KEY,
       },
-    });
+      data: {
+        params: {
+          ordersStatuses: ['finished'],
+          resultsPage: 1,
+        },
+      },
+    };
 
+    const res = await axios.request(options);
     const idosellOrders = res.data;
 
     const mongoDbOrders = idosellOrders.map(order => ({
@@ -33,6 +40,6 @@ export const getProductsFromIdosell = async () => {
     await ProductsCollection.insertMany(mongoDbOrders);
     console.log('Orders successfully saved to MongoDB.');
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };

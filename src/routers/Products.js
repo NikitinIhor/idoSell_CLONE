@@ -6,9 +6,12 @@ import {
   getProductByIdController,
   upsertProductController,
 } from '../controllers/products.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const productsRouter = Router();
+
+productsRouter.use(authenticate);
 
 productsRouter.get('/', ctrlWrapper(getAllProductsController));
 

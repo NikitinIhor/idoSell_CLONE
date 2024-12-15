@@ -8,6 +8,7 @@ import { loger } from './middlewares/loger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 import productsRouter from './routers/Products.js';
+import authRouter from './routers/auth.js';
 
 export const startServer = () => {
   const app = express();
@@ -15,6 +16,8 @@ export const startServer = () => {
   app.use(loger);
   app.use(cors());
   app.use(express.json());
+
+  app.use('/auth', authRouter);
 
   app.use('/products', productsRouter);
 

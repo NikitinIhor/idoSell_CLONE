@@ -33,7 +33,8 @@ export const getProductByIdController = async (req, res) => {
 };
 
 export const createProductController = async (req, res) => {
-  const data = await createProduct(req.body);
+  const { _id: userId } = req.user;
+  const data = await createProduct({ ...req.body, userId });
 
   res.status(201).json({
     status: 201,

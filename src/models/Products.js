@@ -10,6 +10,12 @@ const productsSchema = new Schema(
       },
     ],
     orderWorth: { type: Number, required: true },
+
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   {
     versionKey: false,
