@@ -8,7 +8,9 @@ import {
 } from '../services/Products.js';
 
 export const getAllProductsController = async (req, res) => {
-  const data = await getAllProducts();
+  const { _id: userId } = req.user;
+
+  const data = await getAllProducts({ userId });
 
   res.json({
     status: 200,
@@ -45,7 +47,9 @@ export const createProductController = async (req, res) => {
 
 export const upsertProductController = async (req, res) => {
   const { id } = req.params;
-  const { isNew, data } = await upsertProduct({ _id: id }, req.body, {});
+  const { _id: userId } = req.user;
+
+  const { isNew, data } = await upsertProduct({ _id: id, userId }, req.body);
   const status = isNew ? 201 : 200;
 
   res.status(status).json({
@@ -57,7 +61,9 @@ export const upsertProductController = async (req, res) => {
 
 export const deleteController = async (req, res) => {
   const { id } = req.params;
-  const data = await deleteProduct({ _id: id });
+  const { _id: userId } = req.user;
+
+  const data = await deleteProduct({ _id: id, userId });
 
   if (!data) {
     throw createHttpError(404, `Product with id: ${id} not found`);
