@@ -17,9 +17,71 @@ servers:
 paths:
   /products:
     get:
+      tags:
+        - Products
+      summary: Get all products
+      operationId: getAllProducts
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/products/get.yaml
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      operationId: createProduct
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/products/post.yaml
+  /products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get a product by ID
+      operationId: getProductById
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/products/{id}/get.yaml
+    put:
+      tags:
+        - Products
+      summary: Update a product by ID
+      operationId: updateProductById
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/products/{id}/put.yaml
+    delete:
+      tags:
+        - Products
+      summary: Delete a product by ID
+      operationId: deleteProductById
+      security:
+        - bearerAuth: []
+      $ref: ../swagger/paths/products/{id}/delete.yaml
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Unauthorized access. Token might be missing or invalid.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 'Unauthorized'
+    Forbidden:
+      description: Forbidden. Token lacks necessary permissions.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 'Forbidden'

@@ -2,20 +2,14 @@ import { model, Schema } from 'mongoose';
 
 const productsSchema = new Schema(
   {
-    orderID: { type: String, required: true },
+    orderId: { type: Number, required: true },
     products: [
       {
-        productID: { type: String, required: true },
+        productId: { type: String, required: true },
         quantity: { type: Number, required: true },
       },
     ],
     orderWorth: { type: Number, required: true },
-
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: 'user',
-      required: true,
-    },
   },
   {
     versionKey: false,

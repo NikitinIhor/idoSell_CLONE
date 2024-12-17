@@ -1,0 +1,16 @@
+type: object
+properties:
+  orderId:
+    type: integer
+  products:
+    type: array
+    items:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+  orderWorth:
+    type: number
+    format: float

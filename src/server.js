@@ -6,6 +6,7 @@ import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { loger } from './middlewares/loger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 import cookieParser from 'cookie-parser';
 import productsRouter from './routers/Products.js';
@@ -20,8 +21,8 @@ export const startServer = () => {
   app.use(cookieParser());
 
   app.use('/auth', authRouter);
-
   app.use('/products', productsRouter);
+  app.use('/api-docs', swaggerDocs());
 
   app.use(notFoundHandler);
 

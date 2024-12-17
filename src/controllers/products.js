@@ -35,8 +35,7 @@ export const getProductByIdController = async (req, res) => {
 };
 
 export const createProductController = async (req, res) => {
-  const { _id: userId } = req.user;
-  const data = await createProduct({ ...req.body, userId });
+  const data = await createProduct(req.body);
 
   res.status(201).json({
     status: 201,
@@ -47,9 +46,8 @@ export const createProductController = async (req, res) => {
 
 export const upsertProductController = async (req, res) => {
   const { id } = req.params;
-  const { _id: userId } = req.user;
 
-  const { isNew, data } = await upsertProduct({ _id: id, userId }, req.body);
+  const { isNew, data } = await upsertProduct({ _id: id }, req.body);
   const status = isNew ? 201 : 200;
 
   res.status(status).json({
@@ -61,9 +59,8 @@ export const upsertProductController = async (req, res) => {
 
 export const deleteController = async (req, res) => {
   const { id } = req.params;
-  const { _id: userId } = req.user;
 
-  const data = await deleteProduct({ _id: id, userId });
+  const data = await deleteProduct({ _id: id });
 
   if (!data) {
     throw createHttpError(404, `Product with id: ${id} not found`);

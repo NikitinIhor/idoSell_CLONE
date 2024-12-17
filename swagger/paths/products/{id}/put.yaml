@@ -1,0 +1,38 @@
+summary: 'Update a product by ID'
+operationId: 'updateProductById'
+parameters:
+  - name: 'id'
+    in: 'path'
+    required: true
+    schema:
+      type: string
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../../components/schemas/product.yaml
+responses:
+  '200':
+    description: 'Product updated successfully'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Product updated successfully'
+            data:
+              $ref: ../../../components/schemas/product.yaml
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
+security:
+  - bearerAuth: []
