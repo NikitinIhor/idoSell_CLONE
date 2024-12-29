@@ -9,8 +9,11 @@ import {
 
 export const getAllProductsController = async (req, res) => {
   const { _id: userId } = req.user;
+  console.log(req.query);
+  const minWorth = req.query.minWorth;
+  const maxWorth = req.query.maxWorth;
 
-  const data = await getAllProducts({ userId });
+  const data = await getAllProducts({ userId, minWorth, maxWorth });
 
   res.json({
     status: 200,

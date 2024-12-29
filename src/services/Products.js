@@ -1,6 +1,18 @@
 import ProductsCollection from '../models/Products.js';
 
-export const getAllProducts = () => ProductsCollection.find();
+export const getAllProducts = filter => {
+  const and = [];
+  if (filter.minWorth) {
+    and.push({ orderWorth: { $gte: filter.minWorth } });
+  }
+  if (filter.maxWorth) {
+    and.push({ orderWorth: { $lte: filter.maxWorth } });
+  }
+
+  return ProductsCollection.find({
+    $and: and,
+  });
+};
 
 export const getProductById = id => ProductsCollection.findById(id);
 
