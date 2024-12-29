@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MongoDB } from '../db/MongoDB.js';
 import ProductsCollection from '../models/Products.js';
 import { env } from './env.js';
 
@@ -24,6 +25,8 @@ axios
   .request(config)
   .then(async response => {
     for (const res of response.data.Results) {
+      await MongoDB();
+
       const products = res.orderDetails.productsResults.map(product => ({
         productId: product.productId,
         quantity: product.productQuantity,
@@ -39,7 +42,6 @@ axios
         products: products,
         orderWorth: orderWorth,
       };
-
       try {
         const existingOrder = await ProductsCollection.findOne({
           orderId: res.orderId,

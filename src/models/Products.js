@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 
 const productsSchema = new Schema(
   {
-    orderId: { type: Number, required: true },
+    orderId: { type: String, required: true },
     products: [
       {
         productId: { type: String, required: true },
